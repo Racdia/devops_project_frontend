@@ -18,7 +18,7 @@ jobs:
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ubuntu
-          key: ${{ secrets.EC2_SSH_KEY }}
+          key: ${{ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCh2xUDltEGhY1zO6kmOPeieA5wYeHiBrFp1UV/mXtWSEBGyfY4uIaVU3FCAse6hEYHP9SY24/kFpwYUmthnvKysYrfP0bRU4mxF4ViQgWIBOBrxkhy/BHIAzxtbBlf2D0xNoF9Qq/xBV1EJYoNKH+YNoiYCMJ1Hn92hLVnGb1gEBdOkr2gY8vdIXlq9LQ+anng26niM2YwoA7Als7K3Jomg4GG48dXChkztXo7mFBv4XxspPn7cC4PGLXvJT5Y77GU2bVEfRJ9Yg/z42R06ysoF1bm92O70avsc02JFBAlX6eN6yCzxyOr6971VFGBnuY3FGjacu9nybeNTco5zqyT devops_project_key}}
           script: |
             # Aller dans le dossier du projet et récupérer les dernières mises à jour
             cd /var/www/dev_ops_project
