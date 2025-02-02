@@ -1,39 +1,41 @@
-name: Deploy to AWS EC2
+name: Deploy to EC2
 
 on:
   push:
     branches:
-      - main  # Déploie quand on pousse sur la branche main
+      - main  # déclenche le workflow lorsque vous poussez sur la branche main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    # Étape 1 : Vérifier le code
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Deploy to EC2
-        uses: appleboy/ssh-action@v0.1.4
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ubuntu
-          key: ${{ secrets.EC2_SSH_KEY  }}
-          script: |
-            # Aller dans le dossier du projet et récupérer les dernières mises à jour
-            cd /var/www/dev_ops_project
-            git pull origin main
+    # Étape 2 : Configurer SSH avec la clé privée
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.EC2_SSH_KEY  }}  # Charge la clé privée depuis les secrets
 
-            # Mettre à jour et builder le frontend
-            cd /var/www/devops_project_frontend
-            git pull origin main
-            npm install
-            npm run build --prod
+    # Étape 3 : Tester la connexion SSH
+    - name: Test SSH connection
+      run: ssh -o StrictHostKeyChecking=no ubuntu@52.89.55.119 "echo 'SSH connection successful!'"
 
-            # Mettre à jour et exécuter les migrations du backend
-            cd /var/www/dev_ops_project
-            composer install --no-dev --optimize-autoloader
-            php artisan migrate --force
-
-            # Redémarrer les services si nécessaire
-            sudo systemctl restart nginx
+    # Étape 4 : Déployer sur EC2
+    - name: Deploy to EC2
+      run: |
+        ssh ubuntu@52.89.55.119 << 'EOF'
+        cd /var/www/dev_ops_project
+        git pull origin main
+        cd /var/www/devops_project_frontend
+        git pull origin main
+        npm install
+        npm run build --prod
+        cd /var/www/dev_ops_project
+        composer install --no-dev --optimize-autoloader
+        php artisan migrate --force
+        sudo systemctl restart nginx
+        EOF
