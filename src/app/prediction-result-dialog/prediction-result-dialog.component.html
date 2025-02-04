@@ -1,0 +1,15 @@
+<h2 mat-dialog-title class="result-title">Résultat de la Prédiction</h2>
+<mat-dialog-content class="result-content">
+  <div class="result-card">
+    <div class="result-info">
+      <p class="decision">{{ data.credit_decision }}</p>
+      <p class="probability">
+        Probabilité de remboursement : 
+        <span>{{ data.repayment_probability | number:'1.2-2' }} %</span>
+      </p>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button color="primary" mat-dialog-close>Fermer</button>
+</mat-dialog-actions>
