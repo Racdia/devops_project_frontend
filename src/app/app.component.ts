@@ -1,18 +1,24 @@
-import { Component ,OnInit } from '@angular/core';
-import { UserService } from './services/user.service';
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  users: any[] = [];
+  constructor(public dialog: MatDialog) {}
+  currentView: string = 'credit-app';
 
-  constructor(private userService: UserService) {}
-
+  // Méthode pour changer de vue
   ngOnInit(): void {
-      this.userService.getUsers().subscribe(data => {
-      this.users = data;
-    });
+   
   }
+  
+  switchView(view: string): void {
+    this.currentView = view;
+  }
+
+   
 }
+

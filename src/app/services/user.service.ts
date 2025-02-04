@@ -2,6 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+interface ClientData {
+  income: number;
+  employment: string;
+  education: string;
+  transaction_history: number;
+}
+
+interface PredictionResponse {
+  probability_of_repayment: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -10,7 +21,7 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  getUsers(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+getPrediction(clientData: ClientData): Observable<PredictionResponse> {
+    return this.http.post<PredictionResponse>(this.apiUrl, clientData);
   }
 }

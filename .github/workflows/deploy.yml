@@ -1,0 +1,41 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main  # déclenche le workflow lorsque vous poussez sur la branche main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Étape 1 : Vérifier le code
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    # Étape 2 : Configurer SSH avec la clé privée
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.EC2_SSH_KEY  }}  # Charge la clé privée depuis les secrets
+
+    # Étape 3 : Tester la connexion SSH
+    - name: Test SSH connection
+      run: ssh -o StrictHostKeyChecking=no ubuntu@52.89.55.119 "echo 'SSH connection successful!'"
+
+    # Étape 4 : Déployer sur EC2
+    - name: Deploy to EC2
+      run: |
+        ssh ubuntu@52.89.55.119 << 'EOF'
+        cd /var/www/dev_ops_project
+        git pull origin main
+        cd /var/www/devops_project_frontend
+        git pull origin main
+        npm install
+        npm run build --prod
+        cd /var/www/dev_ops_project
+        composer install --no-dev --optimize-autoloader
+        php artisan migrate --force
+        sudo systemctl restart nginx
+        EOF

@@ -1,0 +1,21 @@
+<div class="scoring-form">
+    <h2>Formulaire de Scoring Crédit</h2>
+    <form [formGroup]="creditForm" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <div *ngFor="let feature of topFeatures" class="form-group">
+          <label for="{{ feature }}">{{ getLabel(feature) }}</label>
+          <input
+            type="number"
+            id="{{ feature }}"
+            [formControlName]="feature"
+            placeholder="Entrez la valeur pour {{ getLabel(feature) }}"
+          />
+          <div *ngIf="creditForm.get(feature)?.invalid && creditForm.get(feature)?.touched" class="error">
+            Ce champ est requis.
+          </div>
+        </div>
+      </div>
+      <button type="submit">Envoyer</button>
+    </form>
+  
+  

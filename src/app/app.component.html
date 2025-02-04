@@ -1,6 +1,55 @@
-<h2>Liste des Utilisateurs</h2>
-<ul>
-  <li *ngFor="let user of users">
-    {{ user.name }} - {{ user.email }}
-  </li>
-</ul>
+<div class="app-container">
+  <!-- Header Menu -->
+  <header class="header-menu">
+    <div class="header-container">
+      <div class="logo">Mon Application</div>
+      <nav class="header-nav">
+        <ul>
+          <li (click)="switchView('credit-app')" [class.active]="currentView === 'credit-app'">Accueil</li>
+          <li>Profil</li>
+          <li>Notifications</li>
+          <li>Déconnexion</li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Conteneur du side menu et du contenu principal -->
+  <div class="body-container">
+    <!-- Side Menu -->
+    <nav class="side-menu">
+      <ul>
+        <li (click)="switchView('credit-app')" [class.active]="currentView === 'credit-app'">Accueil</li>
+        <!-- Cliquer sur "Scoring" bascule la vue vers le formulaire -->
+        <li (click)="switchView('scoring-form')" style="cursor: pointer;">Scoring</li>
+        <li>Historique</li>
+        <li>Paramètres</li>
+      </ul>
+    </nav>
+
+    <!-- Contenu principal défilable -->
+    <div class="main-content">
+      <!-- Vue Dashboard -->
+      <div *ngIf="currentView === 'credit-app'" class="card">
+        <div class="card-header">
+          <h2>Tableau de bord</h2>
+        </div>
+        <div class="card-body">
+          <div class="dashboard-container">
+            <header class="dashboard-header">
+              <h1>Dashboard</h1>
+            </header>
+            <!-- Composant dashboard ou widget financier -->
+            <app-credit-money-widget></app-credit-money-widget>
+            <!-- Ajoutez d'autres widgets ou contenus ici -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Vue Formulaire de Scoring -->
+      <div *ngIf="currentView === 'scoring-form'">
+        <app-scoring-form></app-scoring-form>
+      </div>
+    </div>
+  </div>
+</div>

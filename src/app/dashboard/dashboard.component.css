@@ -1,0 +1,20 @@
+.dashboard-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin: 20px;
+  }
+  
+  .dashboard-card h3 {
+    margin-top: 0;
+    text-align: center;
+    color: #007bff;
+  }
+  
+  .chart-container {
+    position: relative;
+    height: 300px; /* Ajustez la hauteur selon vos besoins */
+  }
+  
