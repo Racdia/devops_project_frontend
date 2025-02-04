@@ -17,7 +17,7 @@ interface PredictionResponse {
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://192.168.1.101:8000/predict/';
+  private apiUrl = 'http://52.89.55.119/api/users';
 
   constructor(private http: HttpClient) {}
 
