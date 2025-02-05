@@ -33,13 +33,12 @@ jobs:
         run: |
           ssh ubuntu@52.89.55.119 << 'EOF'
           cd /var/www/model_scoring_backend_api
+          git remote set-url origin git@github.com:Racdia/devops_project_frontend.git
           git pull origin main
           cd /var/www/devops_project_frontend
+          git remote set-url origin git@github.com:Racdia/devops_project_frontend.git
           git pull origin main
           npm install
           npm run build --prod
-          cd /var/www/dev_ops_project
-          composer install --no-dev --optimize-autoloader
-          php artisan migrate --force
           sudo systemctl restart nginx
           EOF
