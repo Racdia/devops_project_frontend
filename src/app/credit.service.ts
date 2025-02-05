@@ -14,7 +14,7 @@ export interface CreditPredictionResponse {
 })
 export class CreditService {
   // Remplacez l'URL par celle de votre API FastAPI
-  private apiUrl = 'http://127.0.0.1:8000/predict/';
+  private apiUrl = 'http://52.89.55.119/api/predict/';
 
   constructor(private http: HttpClient) { }
 
