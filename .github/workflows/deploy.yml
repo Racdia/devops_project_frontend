@@ -38,8 +38,5 @@ jobs:
           git pull origin main
           npm install
           npm run build --prod
-          cd /var/www/dev_ops_project
-          composer install --no-dev --optimize-autoloader
-          php artisan migrate --force
           sudo systemctl restart nginx
           EOF
